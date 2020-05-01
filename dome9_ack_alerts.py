@@ -11,6 +11,8 @@ headers = {
     "Accept": "application/json"
 }
 # We only want to find un-acknowledged alerts
+# You can add other search filters below if you like
+# so long as you follow the format from the API docs.
 
 search_params = {
     "pageSize": 100,
@@ -25,7 +27,6 @@ search_params = {
 }
 
 # Search without ID for first page, use searchAfter for subsequent
-# then if len findings < 100 - don't request another page
 
 
 r = requests.post(API_ENDPOINT + "/Compliance/Finding/search", 
@@ -54,12 +55,3 @@ while 'searchAfter' in res.keys() and res['searchAfter'] != None:
     res = json.loads(r.text)
 
 print("[INFO] Finished!")
-         
-    
-
-
-
-
-#r = requests.put(API_ENDPOINT + "/Compliance/Finding/" + res['findings'][0]['id'] + "/acknowledge",
-#headers=headers, auth=(API_ID, API_SECRET), data=json.dumps(ack))
-#print(r.text)
